@@ -32,4 +32,17 @@ class TestUser < MiniTest::Test
     assert_equal 2, sal.jokes.length
     assert_equal [joke_1, joke_2], sal.jokes
   end
+
+  def test_a_user_can_tell_a_joke_and_another_user_learns_joke
+    sal = User.new("Sal")
+    ali = User.new("Ali")
+    joke_1 = Joke.new(1, "Why did the strawberry cross the road?", "Because his mother was in a jam.")
+    joke_2 = Joke.new(2, "How do you keep a lion from charging?", "Take away its credit cards.")
+    sal.tell(ali, joke_1)
+    sal.tell(ali, joke_2)
+
+    assert_equal 2, ali.jokes.length
+    assert_equal [joke_1], ali.jokes_by_id(1)
+    assert_equal [joke_2], ali.jokes_by_id(2)
+  end
 end
