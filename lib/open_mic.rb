@@ -17,10 +17,7 @@ attr_reader :location,
   end
 
   def repeated_jokes?
-    jokes = []
-    @performers.each do |performer|
-      jokes.concat(performer.jokes)
-    end
+    jokes = @performers.map{|performer| performer.jokes}.flatten!
     jokes.uniq.length != jokes.length
   end
 end
